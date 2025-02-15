@@ -18,10 +18,19 @@
   border-radius: 40px;
   padding: 0.8rem;
   text-align: center;
-  color: rgb(18, 24, 94);
+  color: rgb(30, 20, 38);
   font-weight: 700;
+  background-color: #e2e3e5;
 }
 
 #search {
   cursor: pointer;
+}
+
+#card-Container {
+  background-color: rgb(66, 147, 174);
+}
+
+#locationContainer {
+  background-color: rgb(77, 142, 164);
 }

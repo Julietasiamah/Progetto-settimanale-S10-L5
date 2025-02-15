@@ -9,7 +9,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Weather />}></Route>
-          <Route path="/details-weather/:id" element={<DetailsWeather />}></Route>
+          <Route path="/DetailsWeather" element={<DetailsWeather />}></Route>
         </Routes>
       </BrowserRouter>
     </>

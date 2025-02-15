@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { Card, Col, Container, Row } from "react-bootstrap";
-import { useLocation } from "react-router-dom";
+import { Button, Card, Col, Container, Row } from "react-bootstrap";
+import { DropletFill, ThermometerHalf, Wind } from "react-bootstrap-icons";
+import { NavLink, useLocation } from "react-router-dom";
 
 const DetailsWeather = () => {
   const location = useLocation();
@@ -20,8 +21,7 @@ const DetailsWeather = () => {
       .then((data) => {
         console.log(data);
         setDailyweather(data.list.filter((_, index) => index % 8 === 0));
-      })
-      .catch((err) => console.error(err));
+      });
   };
 
   useEffect(() => {
@@ -31,22 +31,29 @@ const DetailsWeather = () => {
   return (
     <Container fluid id="Container2">
       <Row>
-        <h1>5 Days Forecast</h1>
+        <h1 className="fw-bold text-dark">5 Days Forecast</h1>
         {dailyweather &&
           dailyweather.map((forecast) => {
             return (
               <Col md={6} key={forecast.dt}>
-                <Card>
+                <Card className="mt-5 " id="card-Container">
                   <Card.Body>
                     <Card.Title>{new Date(forecast.dt_txt).toLocaleString()}</Card.Title>
                     <Card.Text>
                       <img
-                        src="`https://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png`"
+                        src={`https://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png`}
                         alt="weather icon"
                       />
-                      <p>Temperature:{forecast.main.temp}°C</p>
-                      <p>Wind Speed{forecast.wind.speed} m/s</p>
-                      <p>Humidity{forecast.main.humidity}%</p>
+                      <p>
+                        Temperature: <ThermometerHalf /> {forecast.main.temp}°C
+                      </p>
+                      <p>
+                        Wind Speed: <Wind /> {forecast.wind.speed} m/s
+                      </p>
+                      <p>
+                        Humidity:
+                        <DropletFill /> {forecast.main.humidity}%
+                      </p>
                     </Card.Text>
                   </Card.Body>
                 </Card>
@@ -54,6 +61,11 @@ const DetailsWeather = () => {
             );
           })}
       </Row>
+      <NavLink className="nav-link" to="/">
+        <Button variant="primary" className="mt-4 p-2" id="homepagebutton">
+          Go back to homepage
+        </Button>
+      </NavLink>
     </Container>
   );
 };
