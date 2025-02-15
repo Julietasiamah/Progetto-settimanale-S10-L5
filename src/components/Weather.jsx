@@ -5,11 +5,9 @@ import { NavLink } from "react-router-dom";
 
 const Weather = () => {
   const [weatherData, setWeatherData] = useState(false);
-
-  const fetchWeather = () => {
-    fetch(
-      "https://api.openweathermap.org/data/2.5/weather?lat=45.5488306&lon=11.5478825&units=metric&appid=f2afb3e46ab817998a4f7509bc21d8d1"
-    )
+  const token = "f2afb3e46ab817998a4f7509bc21d8d1";
+  const fetchWeather = (cityName) => {
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${token}`)
       .then((resp) => {
         if (resp.ok) {
           return resp.json();
@@ -29,7 +27,7 @@ const Weather = () => {
       });
   };
   useEffect(() => {
-    fetchWeather();
+    fetchWeather("Vicenza");
   }, []);
 
   return (
@@ -43,41 +41,7 @@ const Weather = () => {
       </Row>
 
       <Row>
-        <Col md={4}>
-          <Card className="mt-5 bg-primary-subtle">
-            {/* <Card.Img variant="top" src={weatherData.icon} /> */}
-            <Card.Body>
-              <Card.Title>Location : {weatherData.location}</Card.Title>
-              <Card.Text>
-                <p>Humidity {weatherData.humidity}</p>
-                <img src={weatherData.icon} alt="icona" />
-                <div>Temperature {weatherData.temperature}°C</div>
-                <div>Wind Speed {weatherData.windSpeed}</div>
-              </Card.Text>
-              <NavLink className="nav-link" to="/DetailsWeather">
-                <Button variant="primary">Details</Button>
-              </NavLink>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col md={4}>
-          <Card className="mt-5 bg-primary-subtle">
-            {/* <Card.Img variant="top" src={weatherData.icon} /> */}
-            <Card.Body>
-              <Card.Title>Location : {weatherData.location}</Card.Title>
-              <Card.Text>
-                <p>Humidity {weatherData.humidity}</p>
-                <img src={weatherData.icon} alt="icona" />
-                <div>Temperature {weatherData.temperature}°C</div>
-                <div>Wind Speed {weatherData.windSpeed}</div>
-              </Card.Text>
-              <NavLink className="nav-link" to="/DetailsWeather">
-                <Button variant="primary">Details</Button>
-              </NavLink>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col md={4}>
+        <Col>
           <Card className="mt-5 bg-primary-subtle">
             {/* <Card.Img variant="top" src={weatherData.icon} /> */}
             <Card.Body>
