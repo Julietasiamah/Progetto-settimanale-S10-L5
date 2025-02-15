@@ -1,12 +1,12 @@
-/* eslint-disable no-undef */
 import { useEffect, useState } from "react";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 
-import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Weather = () => {
   const [locationData, setLocationData] = useState(" ");
   const [weatherData, setWeatherData] = useState(false);
+  const navigate = useNavigate();
   const token = "f2afb3e46ab817998a4f7509bc21d8d1";
   const fetchWeather = (cityName) => {
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=metric&appid=${token}`)
@@ -14,7 +14,7 @@ const Weather = () => {
         if (resp.ok) {
           return resp.json();
         } else {
-          throw new Error("Errore fetch");
+          new Error("Errore fetch");
         }
       })
       .then((data) => {
@@ -29,13 +29,13 @@ const Weather = () => {
       });
   };
   useEffect(() => {
-    fetchWeather("Palermo");
+    fetchWeather("Vicenza");
   }, []);
 
   return (
-    <Container className="weather">
+    <Container fluid id="Container">
       <Row id="searchbar">
-        <h1>Meteo</h1>
+        <h1 className="fw-bold">Meteo</h1>
         <Col>
           <input
             value={locationData}
@@ -57,14 +57,18 @@ const Weather = () => {
             <Card.Body>
               <Card.Title> {weatherData.location}</Card.Title>
               <Card.Text>
-                <p>Humidity {weatherData.humidity}</p>
+                <p>Humidity {weatherData.humidity}%</p>
                 <img src={weatherData.icon} alt="icona" />
                 <div>Temperature {weatherData.temperature}°C</div>
-                <div>Wind Speed {weatherData.windSpeed}</div>
+                <div>Wind Speed {weatherData.windSpeed} m/s</div>
               </Card.Text>
-              <NavLink className="nav-link" to="/DetailsWeather">
-                <Button variant="primary">Details</Button>
-              </NavLink>
+
+              <Button
+                variant="primary"
+                onClick={() => navigate("/DetailsWeather", { state: { city: weatherData.location } })}
+              >
+                Details
+              </Button>
             </Card.Body>
           </Card>
         </Col>
